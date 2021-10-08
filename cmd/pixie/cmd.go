@@ -11,7 +11,7 @@ import (
 	"github.com/p3lim/pixie/pkg/tftp"
 )
 
-var version = "dev"
+var Version = "dev"
 
 type args struct {
 	TFTP    string `arg:"-t" default:"0.0.0.0:69" placeholder:"ADDR" help:"tftp server address and port"`
@@ -20,7 +20,7 @@ type args struct {
 }
 
 func (args) Version() string {
-	return fmt.Sprintf("pixie %s", version)
+	return fmt.Sprintf("pixie %s", Version)
 }
 
 func (args) Validate() error {
