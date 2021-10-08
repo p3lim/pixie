@@ -1,0 +1,5 @@
+/ipxe
+/pkg/tftp/ipxe.efi
+/pkg/tftp/ipxe32.efi
+/pkg/tftp/undionly.kpxe
+/bin/

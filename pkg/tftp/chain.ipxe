@@ -1,0 +1,18 @@
+#!ipxe
+
+menu PXE Boot Options
+
+item install Chainload installation
+item shell   iPXE shell
+item exit    Exit
+
+choose --default install --timeout 10000 option && goto ${option}
+
+:install
+chain http://${next-server}:HTTP_PORT/${mac:hexhyp}.ipxe
+
+:shell
+shell
+
+:exit
+exit
