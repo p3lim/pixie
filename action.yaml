@@ -21,7 +21,7 @@ runs:
     - name: Setup Go
       uses: actions/setup-go@v2
       with:
-        go-version: '${{ go_version }}'
+        go-version: '${{ inputs.go_version }}'
 
     - name: Build dependencies
       run: go generate ./...
