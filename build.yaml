@@ -1,0 +1,32 @@
+name: Build
+
+inputs:
+  go_version:
+    required: true
+  ipxe_version:
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Checkout ipxe
+      uses: actions/checkout@v2
+      with:
+        repository: ipxe/ipxe
+        ref: v${{ inputs.ipxe_version }}
+
+    - name: Setup Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '${{ go_version }}'
+
+    - name: Build dependencies
+      run: go generate ./...
+
+    - name: Build binaries
+      env:
+        CGO_ENABLED: 0
+      run: go build -ldflags="-X 'main.Version=${{ github.ref }}'" -o bin/pixie ./cmd/pixie

@@ -1,0 +1,28 @@
+name: Create artifact
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '**'
+
+jobs:
+  artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        uses: ${{ github.repository }}@${{ github.ref }}
+        with:
+          go_version: '1.17.2'
+          ipxe_version: '1.21.1'
+
+      - name: Get short commit sha
+        run: echo "::set-output name=sha_short::$(git rev-parse --shot HEAD)"
+        id: sha
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: pixie-${{ steps.sha.outputs.sha_short }}
+          path: bin/
