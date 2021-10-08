@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build
-        uses: ${{ github.repository }}@${{ github.ref }}
+        uses: p3lim/pixie@${{ github.ref }}
         with:
           go_version: '1.17.2'
           ipxe_version: '1.21.1'
