@@ -11,11 +11,19 @@ jobs:
   artifact:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Checkout ipxe
+      uses: actions/checkout@v2
+      with:
+        repository: ipxe/ipxe
+        ref: v1.21.1
+
       - name: Build
         uses: p3lim/pixie@master
         with:
           go_version: '1.17.2'
-          ipxe_version: '1.21.1'
 
       - name: Get short commit sha
         run: echo "::set-output name=sha_short::$(git rev-parse --shot HEAD)"
