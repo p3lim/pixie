@@ -28,10 +28,11 @@ jobs:
       - name: Build dependencies
         env:
           GO111MODULE: auto
-        run: go generate ./...
+        run: go generate ./pkg/tftp
 
       - name: Build binaries
         env:
+          GO111MODULE: auto
           CGO_ENABLED: 0
         run: go build -ldflags="-X 'main.Version=${{ github.ref }}'" -o bin/pixie ./cmd/pixie
 
