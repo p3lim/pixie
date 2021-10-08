@@ -11,14 +11,14 @@ jobs:
   artifact:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Checkout ipxe
-      uses: actions/checkout@v2
-      with:
-        repository: ipxe/ipxe
-        ref: v1.21.1
+      - name: Checkout ipxe
+        uses: actions/checkout@v2
+        with:
+          repository: ipxe/ipxe
+          ref: v1.21.1
 
       - name: Build
         uses: p3lim/pixie@master
