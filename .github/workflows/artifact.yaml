@@ -29,14 +29,14 @@ jobs:
       - name: Build dependencies
         run: go generate ./...
 
+      - name: Get short commit sha
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        id: sha
+
       - name: Build binaries
         env:
           CGO_ENABLED: 0
-        run: go build -ldflags="-X 'main.Version=${{ github.ref }}'" -o bin/pixie ./cmd/pixie
-
-      - name: Get short commit sha
-        run: echo "::set-output name=sha_short::$(git rev-parse --shot HEAD)"
-        id: sha
+        run: go build -ldflags="-X 'main.Version=dev-${{ steps.sha.outputs.sha_short }}'" -o bin/pixie ./cmd/pixie
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
