@@ -26,6 +26,8 @@ jobs:
           go-version: '1.16.9'
 
       - name: Build dependencies
+        env:
+          GO111MODULE: auto
         run: go generate ./...
 
       - name: Build binaries
