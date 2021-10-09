@@ -19,11 +19,12 @@ func NewServer(addr string, path, extra string) *Server {
 }
 
 func (server *Server) Serve() error {
-	http.Handle("/ipxe", http.FileServer(http.Dir(server.Scripts)))
+	mux := http.NewServeMux()
+	mux.Handle("/ipxe/", http.StripPrefix("/ipxe", http.FileServer(http.Dir(server.Scripts))))
 
 	if server.Extra != "" {
-		http.Handle("/extra", http.FileServer(http.Dir(server.Extra)))
+		mux.Handle("/extra/", http.StripPrefix("/extra", http.FileServer(http.Dir(server.Extra))))
 	}
 
-	return http.ListenAndServe(server.Addr, nil)
+	return http.ListenAndServe(server.Addr, mux)
 }
