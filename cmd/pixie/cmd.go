@@ -18,7 +18,7 @@ type args struct {
 	HTTP      string `arg:"-u,env" default:"0.0.0.0:80" placeholder:"ADDR" help:"http server address and port"`
 	Scripts   string `arg:"-d,env,required" placeholder:"DIR" help:"path to iPXE scripts served from HTTP"`
 	Extra     string `arg:"-e,env" placeholder:"DIR" help:"path to extra files served from HTTP"`
-	Verbosity string `arg:"-v,env" default:"INFO" placeholder:"LEVEL" help:"verbosity level (ERROR,WARNING,INFO,DEBUG)"`
+	Verbosity string `arg:"-v,env:LEVEL" default:"INFO" placeholder:"LEVEL" help:"verbosity level (ERROR,WARNING,INFO,DEBUG)"`
 }
 
 func (args) Version() string {
