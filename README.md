@@ -10,7 +10,7 @@ pixie comes embedded with the following ROMs provided by the iPXE project:
 
 It comes with an embedded [iPXE script](https://ipxe.org/scripting), which is used to chainload into per-machine iPXE scripts or access an iPXE shell.
 
-### Usage
+## Usage
 
 Run the `pixie` binary using default ports, specifying path to store iPXE scripts:
 
