@@ -20,7 +20,7 @@ jobs:
 
       - name: Update version string
         run: |
-          sha="$(git -C ipxe rev-path HEAD)"
+          sha="$(git -C ipxe rev-parse HEAD)"
           sed -Ei "s|ipxe_ref: [0-9a-f]{40}|ipxe_ref: ${sha}|" .github/workflows/*.yaml
           echo "::set-output name=sha_short::$(git -C ipxe rev-parse --short HEAD)"
         id: version
