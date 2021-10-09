@@ -4,9 +4,9 @@ TFTP and HTTP server specifically designed to serve [iPXE](https://ipxe.org) ROM
 
 pixie comes embedded with the following ROMs provided by the iPXE project:
 
-- `undionly.kpxe` - for legacy (BIOS) servers
-- `ipxe.efi` - for 64-bit EFI servers
-- `ipxe32.efi` - for 32-bit EFI servers
+- `undionly.kpxe` - for legacy (BIOS) machines
+- `ipxe.efi` - for 64-bit EFI machines
+- `ipxe32.efi` - for 32-bit EFI machines
 
 It comes with an embedded [iPXE script](https://ipxe.org/scripting), which is used to chainload into per-machine iPXE scripts or access an iPXE shell.
 
