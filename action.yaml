@@ -39,6 +39,10 @@ runs:
         if [[ "${{ steps.cache.outputs.cache-hit }}" = 'true' ]]; then
           echo "Cache hit, skipping ipxe build"
         else
-          go generate ./...
+          make -C ipxe/src bin/undionly.kpxe bin-x86_64-efi/ipxe.efi bin-i386-efi/ipxe.efi
         fi
+      shell: bash
+
+    - name: Go generate
+      run: go generate ./...
       shell: bash
