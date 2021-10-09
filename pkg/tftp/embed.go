@@ -9,11 +9,11 @@ import _ "embed"
 //go:embed undionly.kpxe
 var undionly []byte
 
-//go:generate cp -r ../../ipxe/src/bin-x86_64-efi/ipxe.efi ./
+//go:generate cp ../../ipxe/src/bin-x86_64-efi/ipxe.efi ./
 //go:embed ipxe.efi
 var ipxe64 []byte
 
-//go:generate cp -r ../../ipxe/src/bin-i386-efi/ipxe.efi ./ipxe32.efi
+//go:generate cp ../../ipxe/src/bin-i386-efi/ipxe.efi ./ipxe32.efi
 //go:embed ipxe32.efi
 var ipxe32 []byte
 
