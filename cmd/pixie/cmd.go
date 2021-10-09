@@ -24,13 +24,6 @@ func (args) Version() string {
 	return fmt.Sprintf("pixie %s", Version)
 }
 
-func (args) Validate() error {
-	// TODO: validate address
-	// TODO: validate port as valid and not in use (>0<65535)
-	// TODO: validate scripts dir and permissions
-	return nil
-}
-
 func main() {
 	var cfg args
 	arg.MustParse(&cfg)
