@@ -1,6 +1,6 @@
 # pixie
 
-TFTP server specifically designed to serve [iPXE](https://ipxe.org) ROMs and [chainload](https://ipxe.org/howto/chainloading) file.
+TFTP and HTTP server specifically designed to serve [iPXE](https://ipxe.org) ROMs and scripts.
 
 pixie comes embedded with the following ROMs provided by the iPXE project:
 
@@ -8,9 +8,7 @@ pixie comes embedded with the following ROMs provided by the iPXE project:
 - `ipxe.efi` - for 64-bit EFI servers
 - `ipxe32.efi` - for 32-bit EFI servers
 
-It also comes with an embedded [iPXE script](https://ipxe.org/scripting) used to chainload into into per-machine iPXE scripts on a HTTP server, and also provides access to a iPXE shell.
-
-pixie does not provide a HTTP server (yet) to store the per-machine iPXE scripts.
+It comes with an embedded [iPXE script](https://ipxe.org/scripting), which is used to chainload into per-machine iPXE scripts or access an iPXE shell.
 
 ### Usage
 
@@ -27,7 +25,8 @@ Define a iPXE script for a server with the MAC-address `00:11:22:33:44:55`:
 	boot
 	EOF
 
-On the DHCP server configure pixie as the next-server, an example provided for [ISC dhcpd](https://www.isc.org/dhcp/):
+Configure pixie as the next-server on the DHCP server.  
+Example for [ISC dhcpd](https://www.isc.org/dhcp/):
 
 	option client-architecture code 93 = unsiged integer 16;
 	if exists user-class and option user-class = "iPXE" {
@@ -47,7 +46,7 @@ Example for [dnsmasq](https://thekelleys.org.uk/dnsmasq/doc.html):
 	dhcp-boot=tag:!ipxe,tag:!BIOS,ipxe.efi,pixie,192.168.0.100
 	dhcp-boot=tag:ipxe,chain.ipxe,pixie,192.168.0.100
 
-> In these examples `pixie` runs on `192.168.0.100`
+> In both these examples `pixie` runs on `192.168.0.100`
 
 When a machine with the MAC-address of `00:11:22:33:44:55` now attempt to PXE boot, the following will happen:
 
@@ -63,9 +62,3 @@ When a machine with the MAC-address of `00:11:22:33:44:55` now attempt to PXE bo
 8. The machine boots the operating system
 
 See `--help` for more options.
-
-### Building
-
-	git clone --single-branch --branch="v1.21.1" https://github.com/ipxe/ipxe
-	go generate ./...
-	go build ./cmd/pixie
