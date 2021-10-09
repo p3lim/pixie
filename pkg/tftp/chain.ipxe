@@ -9,7 +9,7 @@ item exit    Exit
 choose --default install --timeout 10000 option && goto ${option}
 
 :install
-chain http://${next-server}:HTTP_PORT/${mac:hexhyp}.ipxe
+chain http://${next-server}:HTTP_PORT/ipxe/${mac:hexhyp}.ipxe
 
 :shell
 shell
