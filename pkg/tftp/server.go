@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/p3lim/pixie/pkg/log"
 	"github.com/pin/tftp"
 )
 
@@ -30,22 +31,40 @@ func (server *Server) Serve() error {
 }
 
 func (server *Server) readHandler(filename string, rf io.ReaderFrom) (err error) {
+	remoteAddr := ""
+	if raddr, ok := rf.(tftp.OutgoingTransfer); ok {
+		r := raddr.RemoteAddr()
+		remoteAddr = r.String()
+	}
+
+	log.Debugf("request for '%s' by '%s'", filename, remoteAddr)
+
+	var n int64
 	switch filename {
 	case "chain.ipxe":
-		_, err = rf.ReadFrom(strings.NewReader(server.chain))
+		n, err = rf.ReadFrom(strings.NewReader(server.chain))
 	case "undionly.kpxe":
-		_, err = rf.ReadFrom(bytes.NewReader(undionly))
+		n, err = rf.ReadFrom(bytes.NewReader(undionly))
 	case "ipxe.efi":
-		_, err = rf.ReadFrom(bytes.NewReader(ipxe64))
+		n, err = rf.ReadFrom(bytes.NewReader(ipxe64))
 	case "ipxe32.efi":
-		_, err = rf.ReadFrom(bytes.NewReader(ipxe32))
+		n, err = rf.ReadFrom(bytes.NewReader(ipxe32))
 	default:
 		err = os.ErrNotExist
 	}
+
+	log.Debugf("%d bytes written to '%s'", n, remoteAddr)
 
 	return err
 }
 
 func (Server) writeHandler(filename string, wt io.WriterTo) error {
+	remoteAddr := ""
+	if raddr, ok := wt.(tftp.IncomingTransfer); ok {
+		r := raddr.RemoteAddr()
+		remoteAddr = r.String()
+	}
+
+	log.Debugf("request to write '%s' denied for '%s'", filename, remoteAddr)
 	return os.ErrPermission
 }
