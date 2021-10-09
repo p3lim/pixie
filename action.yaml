@@ -10,14 +10,14 @@ runs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Checkout ipxe
+    - name: Checkout iPXE
       uses: actions/checkout@v2
       with:
         path: ipxe
         repository: ipxe/ipxe
         ref: v${{ env.IPXE_VERSION }}
 
-    - name: Cache ipxe
+    - name: Cache iPXE ROMs
       uses: actions/cache@v2
       with:
         path: |
@@ -32,9 +32,9 @@ runs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
-    - name: Build dependencies
+    - name: Build iPXE ROMs
       run: |
-        if [[ "${{ steps.cache.outputs.cache-hit}}" = 'true' ]]; then
+        if [[ "${{ steps.cache.outputs.cache-hit }}" = 'true' ]]; then
           echo "Cache hit, skipping ipxe build"
         else
           go generate ./...
