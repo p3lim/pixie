@@ -16,7 +16,7 @@ Run the `pixie` binary using default ports, specifying path to store iPXE script
 
 	pixie -d /srv/ipxe
 
-Define a iPXE script for a server with the MAC-address `00:11:22:33:44:55`:
+Define iPXE script for a machine with the MAC-address `00:11:22:33:44:55`:
 
 	cat >/srv/ipxe/00-11-22-33-44-55.ipxe <<EOF
 	#!ipxe
@@ -48,7 +48,7 @@ Example for [dnsmasq](https://thekelleys.org.uk/dnsmasq/doc.html):
 
 > In both these examples `pixie` runs on `192.168.0.100`
 
-When a machine with the MAC-address of `00:11:22:33:44:55` now attempt to PXE boot, the following will happen:
+When a machine with the MAC-address of `00:11:22:33:44:55` now attempts to PXE boot, the following will happen:
 
 1. The machine queries DHCP (standard procedure from PXE)
 2. The DHCP server will instruct the machine to download a new ROM from pixie (`next-server`) using TFTP
