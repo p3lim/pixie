@@ -4,12 +4,16 @@ menu PXE Boot Options
 
 item install Chainload installation
 item shell   iPXE shell
+item xyz     netboot.xyz
 item exit    Exit
 
 choose --default install --timeout 10000 option && goto ${option}
 
 :install
 chain http://${next-server}:HTTP_PORT/ipxe/${mac:hexhyp}.ipxe
+
+:xyz
+chain --autofree https://boot.netboot.xyz
 
 :shell
 shell
