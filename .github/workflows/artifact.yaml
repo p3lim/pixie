@@ -7,10 +7,6 @@ on:
     tags-ignore:
       - '**'
 
-env:
-  IPXE_VERSION: '1.21.1'
-  GO_VERSION: '1.16.9'
-
 jobs:
   artifact:
     runs-on: ubuntu-latest
