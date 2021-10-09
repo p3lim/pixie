@@ -1,3 +1,7 @@
+### Changes in 0.2.5 (2021-10-09)
+
+- Fixed: netboot.xyz not working (iPXE ROM doesn't support TLS)
+
 ### Changes in 0.2.4 (2021-10-09)
 
 - Fixed: iPXE and extra files not being served
