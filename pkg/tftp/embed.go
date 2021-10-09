@@ -1,3 +1,4 @@
+//go:generate make -j4 -C ../../ipxe/src bin/undionly.kpxe bin-x86_64-efi/ipxe.efi bin-i386-efi/ipxe.efi
 package tftp
 
 import _ "embed"
