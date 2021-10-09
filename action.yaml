@@ -3,7 +3,7 @@ name: Build
 inputs:
   go_version:
     required: true
-  ipxe_version:
+  ipxe_ref:
     required: true
 
 runs:
@@ -17,7 +17,7 @@ runs:
       with:
         path: ipxe
         repository: ipxe/ipxe
-        ref: v${{ inputs.ipxe_version }}
+        ref: ${{ inputs.ipxe_ref }}
 
     - name: Cache iPXE ROMs
       uses: actions/cache@v2
@@ -26,7 +26,7 @@ runs:
           ipxe/src/bin
           ipxe/src/bin-x86_64-efi
           ipxe/src/bin-i386-efi
-        key: ipxe-v${{ inputs.ipxe_version }}
+        key: ipxe-${{ inputs.ipxe_ref }}
       id: cache
 
     - name: Setup Go
