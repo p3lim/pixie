@@ -8,7 +8,7 @@ pixie comes embedded with the following ROMs provided by the iPXE project:
 - `ipxe.efi` - for 64-bit EFI machines
 - `ipxe32.efi` - for 32-bit EFI machines
 
-It comes with an embedded [iPXE script](https://ipxe.org/scripting), which is used to chainload into per-machine iPXE scripts or access an iPXE shell.
+It comes with an embedded [iPXE script](https://ipxe.org/scripting), which is used to chainload into per-machine iPXE scripts or access an iPXE shell. It has no dependencies, everything is in one binary.
 
 ## Usage
 
