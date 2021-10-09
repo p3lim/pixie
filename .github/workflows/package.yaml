@@ -15,23 +15,27 @@ jobs:
           go_version: '1.16.9'
           ipxe_version: '1.21.1'
 
-      - name: Parse semantic version
-        uses: booxmedialtd/ws-action-parse-semver@v1
-        with:
-          input_string: ${{ github.ref }}
-        id: version
+      - name: Get tag
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          VERSION_MAJOR="${VERSION%%\.*}"
+          VERSION_MINOR="${VERSION%.*}"
+          echo "::set-output name=tag::$VERSION"
+          echo "::set-output name=major::$VERSION_MAJOR"
+          echo "::set-output name=minor::$VERSION_MINOR"
+        id: tag
 
       - name: Build binaries
         env:
           CGO_ENABLED: 0
-        run: go build -ldflags="-X 'main.Version=${{ steps.version.outputs.fullversion }}'" -o bin/pixie ./cmd/pixie
+        run: go build -ldflags="-X 'main.Version=${{ steps.tag.outputs.tag }}'" -o bin/pixie ./cmd/pixie
 
       - name: Build image
         uses: redhat-actions/buildah-build@v2
         with:
           containerfiles: Containerfile
           image: pixie
-          tags: ${{ steps.version.outputs.fullversion }} ${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }} ${{ steps.version.outputs.major }} ${{ github.sha }} latest
+          tags: ${{ steps.tag.outputs.tag }} ${{ steps.tag.outputs.major }} ${{ steps.tag.outputs.minor }} ${{ github.sha }} latest
         id: image
 
       - name: Push image

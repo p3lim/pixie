@@ -15,16 +15,20 @@ jobs:
           go_version: '1.16.9'
           ipxe_version: '1.21.1'
 
-      - name: Parse semantic version
-        uses: booxmedialtd/ws-action-parse-semver@v1
-        with:
-          input_string: ${{ github.ref }}
-        id: version
+      - name: Get tag
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          VERSION_MAJOR="${VERSION%%\.*}"
+          VERSION_MINOR="${VERSION%.*}"
+          echo "::set-output name=tag::$VERSION"
+          echo "::set-output name=major::$VERSION_MAJOR"
+          echo "::set-output name=minor::$VERSION_MINOR"
+        id: tag
 
       - name: Build binaries
         env:
           CGO_ENABLED: 0
-        run: go build -ldflags="-X 'main.Version=${{ steps.version.outputs.fullversion }}'" -o bin/pixie ./cmd/pixie
+        run: go build -ldflags="-X 'main.Version=${{ steps.tag.outputs.tag }}'" -o bin/pixie ./cmd/pixie
 
       - uses: softprops/action-gh-release@v1
         with:
