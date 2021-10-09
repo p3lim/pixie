@@ -1,3 +1,7 @@
+### Changes in 0.2.4 (2021-10-09)
+
+- Fixed: iPXE and extra files not being served
+
 ### Changes in 0.2.3 (2021-10-09)
 
 - Added: Option for logging
