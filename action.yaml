@@ -17,29 +17,29 @@ runs:
         repository: ipxe/ipxe
         ref: 2265a65191d76ce367913a61c97752ab88ab1a59
 
-    - name: Cache iPXE ROMs
-      uses: actions/cache@v2
-      with:
-        path: |
-          ipxe/src/bin
-          ipxe/src/bin-x86_64-efi
-          ipxe/src/bin-i386-efi
-        key: ipxe-2265a65191d76ce367913a61c97752ab88ab1a59
-      id: cache
+    # - name: Cache iPXE ROMs
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: |
+    #       ipxe/src/bin
+    #       ipxe/src/bin-x86_64-efi
+    #       ipxe/src/bin-i386-efi
+    #     key: ipxe-2265a65191d76ce367913a61c97752ab88ab1a59
+    #   id: cache
+
+    - name: Build iPXE ROMs
+      run: |
+        # if [[ "${{ steps.cache.outputs.cache-hit }}" = 'true' ]]; then
+        #   echo "Cache hit, skipping ipxe build"
+        # else
+          make -C ipxe/src bin/undionly.kpxe bin-x86_64-efi/ipxe.efi bin-i386-efi/ipxe.efi
+        # fi
+      shell: bash
 
     - name: Setup Go
       uses: actions/setup-go@v2
       with:
         go-version: ${{ inputs.go_version }}
-
-    - name: Build iPXE ROMs
-      run: |
-        if [[ "${{ steps.cache.outputs.cache-hit }}" = 'true' ]]; then
-          echo "Cache hit, skipping ipxe build"
-        else
-          make -C ipxe/src bin/undionly.kpxe bin-x86_64-efi/ipxe.efi bin-i386-efi/ipxe.efi
-        fi
-      shell: bash
 
     - name: Go generate
       run: go generate ./...
