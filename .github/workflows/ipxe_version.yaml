@@ -18,12 +18,15 @@ jobs:
           path: ipxe
           repository: ipxe/ipxe
 
-      - name: Update version string
+      - name: Get commit sha
         run: |
-          sha="$(git -C ipxe rev-parse HEAD)"
-          sed -Ei "s|ipxe_ref: [0-9a-f]{40}|ipxe_ref: ${sha}|" .github/workflows/*.yaml
+          echo "::set-output name=sha::$(git -C ipxe rev-parse HEAD)"
           echo "::set-output name=sha_short::$(git -C ipxe rev-parse --short HEAD)"
         id: version
+
+      - name: Update version string
+        run: |
+          sed -Ei 's/((ref|key): (ipxe-)?)[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' action.yaml
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
