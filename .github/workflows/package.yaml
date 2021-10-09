@@ -1,0 +1,39 @@
+name: Create package
+
+on:
+  push:
+    tags:
+      - '**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        uses: p3lim/pixie@master
+        with:
+          go_version: '1.16.9'
+          ipxe_version: '1.21.1'
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: bin/pixie
+
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          file: Containerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref }}

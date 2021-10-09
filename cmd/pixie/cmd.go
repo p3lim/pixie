@@ -14,9 +14,9 @@ import (
 var Version = "dev"
 
 type args struct {
-	TFTP    string `arg:"-t" default:"0.0.0.0:69" placeholder:"ADDR" help:"tftp server address and port"`
-	HTTP    string `arg:"-u" default:"0.0.0.0:80" placeholder:"ADDR" help:"http server address and port"`
-	Scripts string `arg:"-d,required" placeholder:"DIR" help:"path to iPXE scripts"`
+	TFTP    string `arg:"-t,env" default:"0.0.0.0:69" placeholder:"ADDR" help:"tftp server address and port"`
+	HTTP    string `arg:"-u,env" default:"0.0.0.0:80" placeholder:"ADDR" help:"http server address and port"`
+	Scripts string `arg:"-d,env,required" placeholder:"DIR" help:"path to iPXE scripts"`
 }
 
 func (args) Version() string {
