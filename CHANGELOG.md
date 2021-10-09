@@ -1,3 +1,8 @@
+### Changes in 0.2.3 (2021-10-09)
+
+- Added: Option for logging
+- Added: netboot.xyz to the iPXE menu
+
 ### Changes in 0.2.2 (2021-10-09)
 
 - Added: Validation to CLI arguments
