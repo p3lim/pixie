@@ -15,14 +15,16 @@ jobs:
           go_version: '1.16.9'
           ipxe_version: '1.21.1'
 
-      - name: Get tag
-        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
-        id: tag
+      - name: Parse semantic version
+        uses: booxmedialtd/ws-action-parse-semver@v1
+        with:
+          input_string: ${{ github.ref }}
+        id: version
 
       - name: Build binaries
         env:
           CGO_ENABLED: 0
-        run: go build -ldflags="-X 'main.Version=${{ steps.tag.outputs.tag }}'" -o bin/pixie ./cmd/pixie
+        run: go build -ldflags="-X 'main.Version=${{ steps.version.outputs.fullversion }}'" -o bin/pixie ./cmd/pixie
 
       - uses: softprops/action-gh-release@v1
         with:
