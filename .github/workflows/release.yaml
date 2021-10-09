@@ -13,7 +13,6 @@ jobs:
         uses: p3lim/pixie@master
         with:
           go_version: '1.16.9'
-          ipxe_ref: 988d2c13cdf0f0b4140685af35ced70ac5b3283c
 
       - name: Get tag
         run: |
