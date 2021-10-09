@@ -10,20 +10,22 @@ runs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Cache ipxe
-      uses: actions/cache@v2
-      with:
-        path: ipxe
-        key: ipxe-v${{ env.IPXE_VERSION }}
-      id: cache
-
     - name: Checkout ipxe
-      if: steps.cache.outputs.cache-hit != 'true'
       uses: actions/checkout@v2
       with:
         path: ipxe
         repository: ipxe/ipxe
         ref: v${{ env.IPXE_VERSION }}
+
+    - name: Cache ipxe
+      uses: actions/cache@v2
+      with:
+        path: |
+          ipxe/src/bin
+          ipxe/src/bin-x86_64-efi
+          ipxe/src/bin-i386-efi
+        key: ipxe-v${{ env.IPXE_VERSION }}
+      id: cache
 
     - name: Setup Go
       uses: actions/setup-go@v2
@@ -31,6 +33,10 @@ runs:
         go-version: ${{ env.GO_VERSION }}
 
     - name: Build dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: go generate ./...
+      run: |
+        if [[ "${{ steps.cache.outputs.cache-hit}}" = 'true' ]]; then
+          echo "Cache hit, skipping ipxe build"
+        else
+          go generate ./...
+        fi
       shell: bash
