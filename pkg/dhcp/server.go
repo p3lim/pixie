@@ -59,6 +59,7 @@ func (s *Server) loopServe(conn net.PacketConn) error {
 		if err != nil {
 			return err
 		}
+		log.Debugf("addr: %v", sourceAddr)
 
 		// RFC2132 states 576 is the minimum DHCP message size, but messages are often shorter than
 		// that, I've seen 316 in testing
@@ -68,9 +69,10 @@ func (s *Server) loopServe(conn net.PacketConn) error {
 			continue
 		}
 
-		msg := Message(buffer[:bufLength])
-		log.Debugf("received: %v", msg)
-		log.Debugf("adddr: %v", sourceAddr)
+		msg, err := ParseMessage(buffer[:bufLength])
+		if err != nil {
+			return err
+		}
 
 		// test the Message for a field that is always there, e.g. hlen
 
@@ -79,7 +81,6 @@ func (s *Server) loopServe(conn net.PacketConn) error {
 			continue
 		}
 
-		log.Debug("------------")
 		log.Debugf("op: %v", msg.GetOP())
 		log.Debugf("htype: %v", msg.GetHTYPE())
 		log.Debugf("hlen: %v", msg.GetHLEN())
