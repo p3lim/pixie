@@ -81,22 +81,7 @@ func (s *Server) loopServe(conn net.PacketConn) error {
 			continue
 		}
 
-		log.Debugf("op: %v", msg.GetOP())
-		log.Debugf("htype: %v", msg.GetHTYPE())
-		log.Debugf("hlen: %v", msg.GetHLEN())
-		log.Debugf("hops: %v", msg.GetHOPS())
-		log.Debugf("xid: %v", msg.GetXID())
-		log.Debugf("secs: %v", msg.GetSECS())
-		log.Debugf("flag (broadcast): %v", msg.GetFLAGS().Broadcast())
-		log.Debugf("ciaddr: %v", msg.GetCIADDR())
-		log.Debugf("yiaddr: %v", msg.GetYIADDR())
-		log.Debugf("siaddr: %v", msg.GetSIADDR())
-		log.Debugf("giaddr: %v", msg.GetGIADDR())
-		log.Debugf("chaddr: %v", msg.GetCHADDR())
-		log.Debugf("sname: %v", msg.GetSNAME())
-		log.Debugf("file: %v", msg.GetFILE())
-		log.Debugf("cookie: %v", msg.GetMagicCookie())
-		log.Debugf("options: %v", msg.GetOPTIONS())
-		log.Debug("------------")
+		log.Infof("received %s from %v (%v)", MessageType(msg.GetOption(53)[0]).String(), sourceAddr, msg.GetCHADDR())
+		msg.DebugLog()
 	}
 }

@@ -1,6 +1,10 @@
 package dhcp
 
-import "net"
+import (
+	"net"
+
+	"github.com/p3lim/pixie/pkg/log"
+)
 
 // https://datatracker.ietf.org/doc/html/rfc2131#section-2
 /*
@@ -38,12 +42,18 @@ import "net"
 */
 
 type Message struct {
+	options map[Option][]byte
 	raw     []byte
 }
 
 func ParseMessage(msg []byte) (*Message, error) {
 	m := &Message{
 		raw:     msg,
+		options: make(map[Option][]byte),
+	}
+
+	if err := m.parseOptions(msg[240:]); err != nil {
+		return nil, err
 	}
 
 	return m, nil
@@ -136,8 +146,27 @@ func (m Message) GetMagicCookie() []byte {
 	return m.raw[236:240]
 }
 
-// GetOPTIONS returns the optional parameters from the DHCP Message.
-// See Options for more info.
-func (m Message) GetOPTIONS() Options {
-	return m.parseOptions(m.raw[240:])
+func (m Message) DebugLog() {
+	log.Debug("------------")
+	log.Debugf("op: %v", m.GetOP())
+	log.Debugf("htype: %v", m.GetHTYPE())
+	log.Debugf("hlen: %v", m.GetHLEN())
+	log.Debugf("hops: %v", m.GetHOPS())
+	log.Debugf("xid: %v", m.GetXID())
+	log.Debugf("secs: %v", m.GetSECS())
+	log.Debugf("flag (broadcast): %v", m.GetFLAGS().Broadcast())
+	log.Debugf("ciaddr: %v", m.GetCIADDR())
+	log.Debugf("yiaddr: %v", m.GetYIADDR())
+	log.Debugf("siaddr: %v", m.GetSIADDR())
+	log.Debugf("giaddr: %v", m.GetGIADDR())
+	log.Debugf("chaddr: %v", m.GetCHADDR())
+	log.Debugf("sname: %v", m.GetSNAME())
+	log.Debugf("file: %v", m.GetFILE())
+	log.Debugf("cookie: %v", m.GetMagicCookie())
+
+	for opt, value := range m.options {
+		log.Debugf("option %d: %v", opt, value)
+	}
+
+	log.Debug("------------")
 }
