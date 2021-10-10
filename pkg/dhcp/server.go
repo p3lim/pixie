@@ -86,7 +86,7 @@ func (s *Server) loopServe(conn net.PacketConn) error {
 		log.Debugf("hops: %v", msg.GetHOPS())
 		log.Debugf("xid: %v", msg.GetXID())
 		log.Debugf("secs: %v", msg.GetSECS())
-		log.Debugf("flags: %v", msg.GetFLAGS())
+		log.Debugf("flag (broadcast): %v", msg.GetFLAGS().Broadcast())
 		log.Debugf("ciaddr: %v", msg.GetCIADDR())
 		log.Debugf("yiaddr: %v", msg.GetYIADDR())
 		log.Debugf("siaddr: %v", msg.GetSIADDR())
