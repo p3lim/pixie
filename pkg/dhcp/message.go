@@ -107,7 +107,7 @@ func (m Message) GetGIADDR() net.IP {
 // GetCHADDR returns the client's hardware address from the DHCP Message.
 // This is typically the ethernet MAC.
 func (m Message) GetCHADDR() net.HardwareAddr {
-	return net.HardwareAddr(m[28:44])
+	return net.HardwareAddr(m[28 : 28+m.GetHLEN()])
 }
 
 // GetSNAME returns the server's hostname from the DHCP Message.
