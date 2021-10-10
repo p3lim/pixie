@@ -94,6 +94,7 @@ func (s *Server) loopServe(conn net.PacketConn) error {
 		log.Debugf("chaddr: %v", msg.GetCHADDR())
 		log.Debugf("sname: %v", msg.GetSNAME())
 		log.Debugf("file: %v", msg.GetFILE())
+		log.Debugf("cookie: %v", msg.GetMagicCookie())
 		log.Debugf("options: %v", msg.GetOPTIONS())
 		log.Debug("------------")
 	}

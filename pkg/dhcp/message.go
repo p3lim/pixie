@@ -120,8 +120,14 @@ func (m Message) GetFILE() string {
 	return string(m[108:236])
 }
 
+// GetMagicCookie returns the "magic cookie" prefixed to the options field of the DHCP Message.
+// This field always contains the (decimal) values 99, 130, 83, and 99.
+func (m Message) GetMagicCookie() []byte {
+	return m[236:240]
+}
+
 // GetOPTIONS returns the optional parameters from the DHCP Message.
 // See Options for more info.
 func (m Message) GetOPTIONS() Options {
-	return m.parseOptions(m[236:])
+	return m.parseOptions(m[240:])
 }
