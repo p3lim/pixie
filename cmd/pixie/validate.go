@@ -46,6 +46,11 @@ func (cfg args) Validate() error {
 	if err := parseHostPort(cfg.HTTP); err != nil {
 		return err
 	}
+	if cfg.DHCP != "" {
+		if err := parseHostPort(cfg.DHCP); err != nil {
+			return err
+		}
+	}
 	if err := parseDir(cfg.Scripts); err != nil {
 		return err
 	}
