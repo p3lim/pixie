@@ -29,7 +29,7 @@ jobs:
           sed -Ei 's/((ref|key): (ipxe-)?)[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' action.yaml
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           title: ':arrow_up: Bump ipxe/ipxe to ${{ steps.version.outputs.sha_short }}'
           body: 'https://github.com/ipxe/ipxe/commits/${{ steps.version.outputs.sha }}'
