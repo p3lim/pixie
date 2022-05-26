@@ -19,7 +19,7 @@ runs:
         fetch-depth: 0 # we need the entire history to build iPXE
 
     - name: Setup Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v3.2.0
       with:
         go-version: ${{ inputs.go_version }}
 
