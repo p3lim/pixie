@@ -19,7 +19,7 @@ jobs:
           repository: ipxe/ipxe
 
       - name: Get version
-        uses: .github/actions/version
+        uses: ./.github/actions/version
         with:
           path: ipxe
         id: version

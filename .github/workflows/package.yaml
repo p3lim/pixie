@@ -13,7 +13,7 @@ jobs:
         uses: p3lim/pixie@master
 
       - name: Get version
-        uses: .github/actions/version
+        uses: ./.github/actions/version
         id: version
 
       - name: Build binaries
