@@ -26,7 +26,7 @@ jobs:
         run: go build -ldflags="-X 'main.Version=dev-${{ steps.sha.outputs.sha_short }}'" -o bin/pixie ./cmd/pixie
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: pixie-${{ steps.sha.outputs.sha_short }}
           path: bin/
