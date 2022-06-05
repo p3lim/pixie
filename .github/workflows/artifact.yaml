@@ -11,8 +11,11 @@ jobs:
   artifact:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/prep.yaml
-      - uses: ./.github/actions/ipxe.yaml
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: ${{ github.action_path }}/go.yaml
+      - uses: ${{ github.action_path }}/ipxe.yaml
 
       - name: Get short commit sha
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"

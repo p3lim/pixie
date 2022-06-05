@@ -3,9 +3,6 @@ name: Prepare build
 runs:
   using: composite
   steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
     - name: Setup Go
       uses: actions/setup-go@v3
       with:
