@@ -24,11 +24,15 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Restore iPXE from cache
-        uses: actions/cache@v3
+      - name: Restore iPXE ROMs from artifact
+        uses: actions/download-artifact@v3
         with:
-          key: ipxe
+          name: ipxe-roms
           path: pkg/tftp/ipxe
+
+      - name: Debug files
+        run: |
+          find pkg/
 
       - name: Get version
         uses: ./.github/actions/version

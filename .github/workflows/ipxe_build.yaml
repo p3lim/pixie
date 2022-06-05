@@ -125,16 +125,8 @@ jobs:
           path: |
             src/bin-arm64-efi/snponly.efi
 
-      - name: Debug caches
-        run: find
-
-      - name: Combine caches
-        run: |
-          mkdir ipxe
-          cp bin-*/*.{efi,kpxe} ipxe/
-
-      - name: Cache
-        uses: actions/cache@v3
+      - name: Create artifact
+        uses: actions/upload-artifact@v3
         with:
-          key: ipxe
-          path: ipxe
+          name: ipxe-roms
+          path: src/bin*/*.(efi|kpxe)
