@@ -3,14 +3,13 @@ name: Prepare build
 on:
   workflow_call:
 
-jobs:
-  prepare:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
 
-      - name: Setup Go
-        uses: actions/setup-go@v3
-        with:
-          go-version-file: go.mod
+    - name: Setup Go
+      uses: actions/setup-go@v3
+      with:
+        go-version-file: go.mod
