@@ -63,7 +63,7 @@ jobs:
       - name: Build
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          make -j4 CROSS=arm-none-eabi- ARCH=arm32 \
+          make -j4 -C src CROSS=arm-none-eabi- ARCH=arm32 \
               bin-arm32-efi/snponly.efi
 
   build-ipxe-arm64:
@@ -93,7 +93,7 @@ jobs:
       - name: Build
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          make -j4 CROSS=aarch64-linux-gnu- ARCH=arm64 \
+          make -j4 -C src CROSS=aarch64-linux-gnu- ARCH=arm64 \
               bin-arm64-efi/snponly.efi
 
   cache:
