@@ -7,7 +7,7 @@ env:
   IPXE_REF: 70995397e5bdfd3431e12971aa40630c7014785f
 
 jobs:
-  build-ipxe-x86:
+  x86:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
               bin-i386-efi/ipxe.efi \
               bin-i386-efi/snponly.efi
 
-  build-ipxe-arm32:
+  arm32:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -66,7 +66,7 @@ jobs:
           make -j4 -C src CROSS=arm-none-eabi- ARCH=arm32 \
               bin-arm32-efi/snponly.efi
 
-  build-ipxe-arm64:
+  arm64:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -99,9 +99,9 @@ jobs:
   cache:
     runs-on: ubuntu-20.04
     needs:
-      - build-ipxe-x86
-      - build-ipxe-arm32
-      - build-ipxe-arm64
+      - x86
+      - arm32
+      - arm64
     steps:
       - name: Mount x86 cache
         uses: actions/cache@v3
