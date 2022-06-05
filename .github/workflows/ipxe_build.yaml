@@ -37,6 +37,7 @@ jobs:
               bin-i386-efi/snponly.efi
 
       - name: Cache binaries
+        if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/cache@v3
         with:
           key: ipxe2-x86-${{ env.IPXE_REF }}
@@ -113,6 +114,7 @@ jobs:
               bin-arm64-efi/snponly.efi
 
       - name: Cache binaries
+        if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/cache@v3
         with:
           key: ipxe2-arm64-${{ env.IPXE_REF }}
