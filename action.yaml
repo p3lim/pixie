@@ -18,6 +18,9 @@ runs:
         ref: 70995397e5bdfd3431e12971aa40630c7014785f
         fetch-depth: 0 # we need the entire history to build iPXE
 
+    - name: Add ARM build deps
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+
     - name: Setup Go
       uses: actions/setup-go@v3
       with:
