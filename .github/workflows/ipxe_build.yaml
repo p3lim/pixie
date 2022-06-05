@@ -17,11 +17,11 @@ jobs:
           ref: ${{ env.IPXE_REF }}
           fetch-depth: 0 # we need the entire history to build iPXE
 
-      - name: Cache binaries
+      - name: Read cache
         uses: actions/cache@v3
         id: cache
         with:
-          key: ipxe-x86-${{ env.IPXE_REF }}
+          key: ipxe2-x86-${{ env.IPXE_REF }}
           path: |
             src/bin/*.kpxe
             src/bin*/*.efi
@@ -36,6 +36,14 @@ jobs:
               bin-i386-efi/ipxe.efi \
               bin-i386-efi/snponly.efi
 
+      - name: Cache binaries
+        uses: actions/cache@v3
+        with:
+          key: ipxe2-x86-${{ env.IPXE_REF }}
+          path: |
+            src/bin/*.kpxe
+            src/bin*/*.efi
+
   arm32:
     runs-on: ubuntu-20.04
     steps:
@@ -46,11 +54,11 @@ jobs:
           ref: ${{ env.IPXE_REF }}
           fetch-depth: 0 # we need the entire history to build iPXE
 
-      - name: Cache binaries
+      - name: Read cache
         uses: actions/cache@v3
         id: cache
         with:
-          key: ipxe-arm32-${{ env.IPXE_REF }}
+          key: ipxe2-arm32-${{ env.IPXE_REF }}
           path: |
             src/bin-arm32-efi/snponly.efi
 
@@ -66,6 +74,15 @@ jobs:
           make -j4 -C src CROSS=arm-none-eabi- ARCH=arm32 \
               bin-arm32-efi/snponly.efi
 
+      - name: Cache binaries
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v3
+        id: cache
+        with:
+          key: ipxe2-arm32-${{ env.IPXE_REF }}
+          path: |
+            src/bin-arm32-efi/snponly.efi
+
   arm64:
     runs-on: ubuntu-20.04
     steps:
@@ -76,11 +93,11 @@ jobs:
           ref: ${{ env.IPXE_REF }}
           fetch-depth: 0 # we need the entire history to build iPXE
 
-      - name: Cache binaries
+      - name: Read cache
         uses: actions/cache@v3
         id: cache
         with:
-          key: ipxe-arm64-${{ env.IPXE_REF }}
+          key: ipxe2-arm64-${{ env.IPXE_REF }}
           path: |
             src/bin-arm64-efi/snponly.efi
 
@@ -96,6 +113,14 @@ jobs:
           make -j4 -C src CROSS=aarch64-linux-gnu- ARCH=arm64 \
               bin-arm64-efi/snponly.efi
 
+      - name: Cache binaries
+        uses: actions/cache@v3
+        id: cache
+        with:
+          key: ipxe2-arm64-${{ env.IPXE_REF }}
+          path: |
+            src/bin-arm64-efi/snponly.efi
+
   cache:
     runs-on: ubuntu-20.04
     needs:
@@ -106,19 +131,19 @@ jobs:
       - name: Mount x86 cache
         uses: actions/cache@v3
         with:
-          key: ipxe-x86-${{ env.IPXE_REF }}
+          key: ipxe2-x86-${{ env.IPXE_REF }}
           path: src*
 
       - name: Mount arm32 cache
         uses: actions/cache@v3
         with:
-          key: ipxe-arm32-${{ env.IPXE_REF }}
+          key: ipxe2-arm32-${{ env.IPXE_REF }}
           path: src*
 
       - name: Mount arm64 cache
         uses: actions/cache@v3
         with:
-          key: ipxe-arm64-${{ env.IPXE_REF }}
+          key: ipxe2-arm64-${{ env.IPXE_REF }}
           path: src*
 
       - name: Debug caches
