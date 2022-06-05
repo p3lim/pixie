@@ -6,34 +6,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  get-version:
-    runs-on: ubuntu-latest
-    outputs:
-      sha: ${{ steps.version.outputs.sha }}
-      sha-short: ${{ steps.version.outputs.sha-short }}
-    steps:
-      - name: Checkout iPXE from master
-        uses: actions/checkout@v3
-        with:
-          repository: ipxe/ipxe
-
-      - name: Get version
-        run: |
-          echo "::set-output name=full::$(git rev-parse HEAD)"
-          echo "::set-output name=short::$(git rev-parse --short HEAD)"
-        id: version
-
   update-version:
     runs-on: ubuntu-latest
-    needs:
-      - get-version
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Get latest version
+        run: |
+          echo "::set-output name=sha::$(curl -u "u:${{ github.token }}" https://api.github.com/repos/ipxe/ipxe/git/ref/heads/master | jq -r '.object.sha')"
+        id: version
+
       - name: Update version string
         run: |
-          sed -Ei 's/(IPXE_REF: )[0-9a-f]{40}/\1${{ needs.get-version.outputs.sha }}/' .github/workflows/ipxe_build.yaml
+          sed -Ei 's/(IPXE_REF: )[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' .github/workflows/ipxe_build.yaml
 
       - name: Check dirty status
         id: dirty
@@ -49,9 +35,9 @@ jobs:
         if: steps.dirty.outputs.dirty == 'true'
         uses: peter-evans/create-pull-request@v4
         with:
-          title: ':arrow_up: Bump ipxe/ipxe to ${{ needs.get-version.outputs.sha-short }}'
-          body: 'https://github.com/ipxe/ipxe/commits/${{ needs.get-version.outputs.sha }}'
-          commit-message: ':arrow_up: Bump ipxe/ipxe to ${{ needs.get-version.outputs.sha-short }}'
+          title: ':arrow_up: Bump ipxe/ipxe'
+          body: 'https://github.com/ipxe/ipxe/commits/${{ steps.version.outputs.sha }}'
+          commit-message: ':arrow_up: Bump ipxe/ipxe to ${{ steps.version.outputs.sha }}'
           labels: dependencies
           branch: ipxe-version
           delete-branch: true
