@@ -1,9 +1,5 @@
 name: Build
 
-inputs:
-  go_version:
-    required: true
-
 runs:
   using: composite
   steps:
