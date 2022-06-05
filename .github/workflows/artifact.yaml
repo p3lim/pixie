@@ -9,9 +9,9 @@ on:
 
 jobs:
   prepare:
-    uses: ./.github/workflows/reusable/prep.yaml
+    uses: ./.github/workflows/prep.yaml
   ipxe:
-    uses: ./.github/workflows/reusable/ipxe.yaml
+    uses: ./.github/workflows/ipxe.yaml
 
   artifact:
     runs-on: ubuntu-latest
