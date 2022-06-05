@@ -40,4 +40,5 @@ jobs:
           commit-message: ':arrow_up: Bump ipxe/ipxe to ${{ steps.version.outputs.sha }}'
           labels: dependencies
           branch: ipxe-version
+          token: ${{ secrets.WORKFLOW_PAT }} # needed to modify workflow files
           delete-branch: true
