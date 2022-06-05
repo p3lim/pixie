@@ -1,8 +1,15 @@
-name: Build iPXE
+name: Build
+
+inputs:
+  go_version:
+    required: true
 
 runs:
   using: composite
   steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - name: Checkout iPXE
       uses: actions/checkout@v2
       with:
@@ -11,6 +18,11 @@ runs:
         ref: 70995397e5bdfd3431e12971aa40630c7014785f
         fetch-depth: 0 # we need the entire history to build iPXE
 
-    - name: Build iPXE
+    - name: Setup Go
+      uses: actions/setup-go@v3
+      with:
+        go-version-file: go.mod
+
+    - name: Go generate
       run: go generate ./...
       shell: bash

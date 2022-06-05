@@ -1,9 +1,0 @@
-name: Prepare build
-
-runs:
-  using: composite
-  steps:
-    - name: Setup Go
-      uses: actions/setup-go@v3
-      with:
-        go-version-file: go.mod
