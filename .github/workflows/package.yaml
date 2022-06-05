@@ -12,8 +12,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: ${{ github.action_path }}/go.yaml
-      - uses: ${{ github.action_path }}/ipxe.yaml
+      - uses: ./.github/actions/go.yaml
+      - uses: ./.github/actions/ipxe.yaml
 
       - name: Get tag
         run: |
