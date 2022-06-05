@@ -6,14 +6,14 @@ on:
       - '**'
 
 jobs:
+  prepare:
+    uses: ./.github/workflows/reusable/prep.yaml
+  ipxe:
+    uses: ./.github/workflows/reusable/ipxe.yaml
+
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Build
-        uses: p3lim/pixie@master
-        with:
-          go_version: '1.16.9'
-
       - name: Get tag
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
