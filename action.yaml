@@ -19,6 +19,7 @@ runs:
         fetch-depth: 0 # we need the entire history to build iPXE
 
     - name: Add cross-compile deps
+      shell: bash
       run: |
         sudo apt update
         sudo apt install -y gcc-aarch64-linux-gnu \
