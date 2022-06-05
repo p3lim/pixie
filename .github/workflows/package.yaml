@@ -9,7 +9,7 @@ jobs:
   package:
     runs-on: ubuntu-latest
     steps:
-      - name: Build
+      - name: Setup & build deps
         uses: p3lim/pixie@master
 
       - name: Get version
