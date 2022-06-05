@@ -129,4 +129,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ipxe-roms
-          path: src/bin*/*.(efi|kpxe)
+          path: src/bin*/*
