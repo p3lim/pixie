@@ -77,7 +77,6 @@ jobs:
       - name: Cache binaries
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/cache@v3
-        id: cache
         with:
           key: ipxe2-arm32-${{ env.IPXE_REF }}
           path: |
@@ -115,7 +114,6 @@ jobs:
 
       - name: Cache binaries
         uses: actions/cache@v3
-        id: cache
         with:
           key: ipxe2-arm64-${{ env.IPXE_REF }}
           path: |
