@@ -8,14 +8,12 @@ on:
       - '**'
 
 jobs:
-  prepare:
-    uses: ./.github/workflows/prep.yaml
-  ipxe:
-    uses: ./.github/workflows/ipxe.yaml
-
   artifact:
     runs-on: ubuntu-latest
     steps:
+      - uses: ./.github/actions/prep.yaml
+      - uses: ./.github/actions/ipxe.yaml
+
       - name: Get short commit sha
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
         id: sha

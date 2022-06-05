@@ -6,14 +6,12 @@ on:
       - '**'
 
 jobs:
-  prepare:
-    uses: ./.github/workflows/prep.yaml
-  ipxe:
-    uses: ./.github/workflows/ipxe.yaml
-
   release:
     runs-on: ubuntu-latest
     steps:
+      - uses: ./.github/actions/prep.yaml
+      - uses: ./.github/actions/ipxe.yaml
+
       - name: Get tag
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"

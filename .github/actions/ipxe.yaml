@@ -1,10 +1,7 @@
 name: Build iPXE
 
-on:
-  workflow_call:
-
 runs:
-  uses: composite
+  using: composite
   steps:
     - name: Checkout iPXE
       uses: actions/checkout@v2
