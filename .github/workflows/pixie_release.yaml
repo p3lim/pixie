@@ -6,11 +6,27 @@ on:
       - '**'
 
 jobs:
+  build-ipxe:
+    uses: ./.github/workflows/ipxe_build.yaml
+
   release:
     runs-on: ubuntu-latest
+    needs:
+      - build-ipxe
     steps:
-      - name: Setup & build deps
-        uses: p3lim/pixie@master
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: go.mod
+
+      - name: Restore iPXE ROMs from artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ipxe-roms
+          path: pkg/tftp/ipxe
 
       - name: Get version
         uses: ./.github/actions/version

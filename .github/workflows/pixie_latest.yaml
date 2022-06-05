@@ -1,4 +1,4 @@
-name: Create artifact
+name: Create build from latest commit
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
   build-ipxe:
     uses: ./.github/workflows/ipxe_build.yaml
 
-  artifact:
+  latest:
     runs-on: ubuntu-latest
     needs:
       - build-ipxe
@@ -29,10 +29,6 @@ jobs:
         with:
           name: ipxe-roms
           path: pkg/tftp/ipxe
-
-      - name: Debug files
-        run: |
-          find pkg/
 
       - name: Get version
         uses: ./.github/actions/version
