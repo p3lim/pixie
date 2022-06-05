@@ -1,3 +1,12 @@
+### Changes in 0.3.0 (2022-06-05)
+
+- Added: Support for 64-bit and 32-bit ARM ROMs
+- Added: Support for x86 snponly ROMs
+
+### Changes in 0.2.6 (2022-06-05)
+
+- Fixed: Incorrect HTTP port used in chain
+
 ### Changes in 0.2.5 (2021-10-09)
 
 - Fixed: netboot.xyz not working (iPXE ROM doesn't support TLS)
