@@ -18,10 +18,10 @@ type Server struct {
 }
 
 func NewServer(addr string, http string) *Server {
-	_, port, _ := net.SplitHostPort(addr) // already validated
+	_, httpPort, _ := net.SplitHostPort(http) // already validated
 	return &Server{
 		Addr:  addr,
-		chain: strings.Replace(chainTemplate, "HTTP_PORT", port, 1),
+		chain: strings.Replace(chainTemplate, "HTTP_PORT", httpPort, 1),
 	}
 }
 
