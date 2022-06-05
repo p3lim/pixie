@@ -19,7 +19,7 @@ jobs:
       - name: Build binaries
         env:
           CGO_ENABLED: 0
-        run: go build -ldflags="-X 'main.Version=${{ steps.version.outputs.patch }}'" -o bin/pixie ./cmd/pixie
+        run: go build -ldflags="-X 'main.Version=${{ steps.version.outputs.tag-patch }}'" -o bin/pixie ./cmd/pixie
 
       - name: Trim changelog
         run: sed -ni '1p;2,/^###/{/^###/q;p;}' CHANGELOG.md

@@ -19,14 +19,14 @@ jobs:
       - name: Build binaries
         env:
           CGO_ENABLED: 0
-        run: go build -ldflags="-X 'main.Version=${{ steps.tag.outputs.patch }}'" -o bin/pixie ./cmd/pixie
+        run: go build -ldflags="-X 'main.Version=${{ steps.tag.outputs.tag-patch }}'" -o bin/pixie ./cmd/pixie
 
       - name: Build image
         uses: redhat-actions/buildah-build@v2
         with:
           containerfiles: Containerfile
           image: pixie
-          tags: ${{ steps.tag.outputs.major }} ${{ steps.tag.outputs.minor }} ${{ steps.tag.outputs.patch }} ${{ steps.tag.outputs.sha }} latest
+          tags: ${{ steps.tag.outputs.tag-major }} ${{ steps.tag.outputs.tag-minor }} ${{ steps.tag.outputs.tag-patch }} ${{ steps.tag.outputs.sha }} latest
         id: image
 
       - name: Push image
