@@ -18,22 +18,22 @@ jobs:
           path: ipxe
           repository: ipxe/ipxe
 
-      - name: Get commit sha
-        run: |
-          echo "::set-output name=sha::$(git -C ipxe rev-parse HEAD)"
-          echo "::set-output name=sha_short::$(git -C ipxe rev-parse --short HEAD)"
+      - name: Get version
+        uses: .github/actions/version
+        with:
+          path: ipxe
         id: version
 
       - name: Update version string
         run: |
-          sed -Ei 's/((ref|key): (ipxe-)?)[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' .github/actions/ipxe.yaml
+          sed -Ei 's/((ref|key): (ipxe-)?)[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' action.yaml
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
         with:
-          title: ':arrow_up: Bump ipxe/ipxe to ${{ steps.version.outputs.sha_short }}'
+          title: ':arrow_up: Bump ipxe/ipxe to ${{ steps.version.outputs.sha-short }}'
           body: 'https://github.com/ipxe/ipxe/commits/${{ steps.version.outputs.sha }}'
-          commit-message: ':arrow_up: Bump ipxe/ipxe to ${{ steps.version.outputs.sha_short }}'
+          commit-message: ':arrow_up: Bump ipxe/ipxe to ${{ steps.version.outputs.sha-short }}'
           labels: dependencies
           branch: ipxe-version
           delete-branch: true

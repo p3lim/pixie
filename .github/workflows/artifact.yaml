@@ -14,17 +14,17 @@ jobs:
       - name: Build
         uses: p3lim/pixie@master
 
-      - name: Get short commit sha
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-        id: sha
+      - name: Get version
+        uses: .github/actions/version
+        id: version
 
       - name: Build binaries
         env:
           CGO_ENABLED: 0
-        run: go build -ldflags="-X 'main.Version=dev-${{ steps.sha.outputs.sha_short }}'" -o bin/pixie ./cmd/pixie
+        run: go build -ldflags="-X 'main.Version=dev-${{ steps.version.outputs.sha-short }}'" -o bin/pixie ./cmd/pixie
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: pixie-${{ steps.sha.outputs.sha_short }}
+          name: pixie-${{ steps.version.outputs.sha-short }}
           path: bin/

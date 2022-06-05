@@ -12,20 +12,14 @@ jobs:
       - name: Build
         uses: p3lim/pixie@master
 
-      - name: Get tag
-        run: |
-          VERSION="${GITHUB_REF#refs/tags/}"
-          VERSION_MAJOR="${VERSION%%\.*}"
-          VERSION_MINOR="${VERSION%.*}"
-          echo "::set-output name=tag::$VERSION"
-          echo "::set-output name=major::$VERSION_MAJOR"
-          echo "::set-output name=minor::$VERSION_MINOR"
-        id: tag
+      - name: Get version
+        uses: .github/actions/version
+        id: version
 
       - name: Build binaries
         env:
           CGO_ENABLED: 0
-        run: go build -ldflags="-X 'main.Version=${{ steps.tag.outputs.tag }}'" -o bin/pixie ./cmd/pixie
+        run: go build -ldflags="-X 'main.Version=${{ steps.version.outputs.patch }}'" -o bin/pixie ./cmd/pixie
 
       - name: Trim changelog
         run: sed -ni '1p;2,/^###/{/^###/q;p;}' CHANGELOG.md
