@@ -21,7 +21,7 @@ runs:
     - name: Setup Go
       uses: actions/setup-go@v3
       with:
-        go-version: ${{ inputs.go_version }}
+        go-version: go.mod
 
     - name: Go generate
       run: go generate ./...
