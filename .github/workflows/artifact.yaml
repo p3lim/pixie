@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-ipxe:
-    uses: ./.github/workflows/ipxe-build.yaml
+    uses: ./.github/workflows/ipxe_build.yaml
 
   artifact:
     runs-on: ubuntu-latest
