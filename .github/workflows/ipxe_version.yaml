@@ -26,7 +26,7 @@ jobs:
 
       - name: Update version string
         run: |
-          sed -Ei 's/((ref|key): (ipxe-)?)[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' action.yaml
+          sed -Ei 's/(IPXE_REF: )[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' .github/workflows/ipxe_build.yaml
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
