@@ -45,10 +45,18 @@ func (server *Server) readHandler(filename string, rf io.ReaderFrom) (err error)
 		n, err = rf.ReadFrom(strings.NewReader(server.chain))
 	case "undionly.kpxe":
 		n, err = rf.ReadFrom(bytes.NewReader(undionly))
-	case "ipxe.efi":
+	case "ipxe64.efi", "ipxe.efi":
 		n, err = rf.ReadFrom(bytes.NewReader(ipxe64))
 	case "ipxe32.efi":
 		n, err = rf.ReadFrom(bytes.NewReader(ipxe32))
+	case "snponly64.efi", "snponly.efi":
+		n, err = rf.ReadFrom(bytes.NewReader(snponly64))
+	case "snponly32.efi":
+		n, err = rf.ReadFrom(bytes.NewReader(snponly32))
+	case "snponly-arm64.efi", "snponly-arm.efi":
+		n, err = rf.ReadFrom(bytes.NewReader(snponly64arm))
+	case "snponly-arm32.efi":
+		n, err = rf.ReadFrom(bytes.NewReader(snponly32arm))
 	default:
 		err = os.ErrNotExist
 	}
