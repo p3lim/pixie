@@ -25,10 +25,12 @@ jobs:
         id: version
 
       - name: Update version string
-        id: update
         run: |
           sed -Ei 's/(IPXE_REF: )[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' .github/workflows/ipxe_build.yaml
 
+      - name: Check dirty status
+        id: dirty
+        run: |
           # set a flag if something was changed
           if git diff-index --quiet HEAD --; then
             echo "::set-output name=dirty::false"
@@ -37,7 +39,7 @@ jobs:
           fi
 
       - name: Create pull request
-        if: steps.update.outputs.dirty == 'true'
+        if: steps.dirty.outputs.dirty == 'true'
         uses: peter-evans/create-pull-request@v4
         with:
           title: ':arrow_up: Bump ipxe/ipxe to ${{ steps.version.outputs.sha-short }}'
