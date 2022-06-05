@@ -107,19 +107,22 @@ jobs:
         uses: actions/cache@v3
         with:
           key: ipxe-x86-${{ env.IPXE_REF }}
-          path: bin-x86
+          path: src*
 
       - name: Mount arm32 cache
         uses: actions/cache@v3
         with:
           key: ipxe-arm32-${{ env.IPXE_REF }}
-          path: bin-arm32
+          path: src*
 
       - name: Mount arm64 cache
         uses: actions/cache@v3
         with:
           key: ipxe-arm64-${{ env.IPXE_REF }}
-          path: bin-arm64
+          path: src*
+
+      - name: Debug caches
+        run: find
 
       - name: Combine caches
         run: |
