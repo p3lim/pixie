@@ -1,0 +1,135 @@
+name: Build iPXE
+
+on:
+  workflow_call:
+
+env:
+  IPXE_REF: 70995397e5bdfd3431e12971aa40630c7014785f
+
+jobs:
+  build-ipxe-x86:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ipxe/ipxe
+          ref: ${{ env.IPXE_REF }}
+          fetch-depth: 0 # we need the entire history to build iPXE
+
+      - name: Cache binaries
+        uses: actions/cache@v3
+        id: cache
+        with:
+          key: ipxe-x86-${{ env.IPXE_REF }}
+          path: |
+            src/bin/*.kpxe
+            src/bin*/*.efi
+
+      - name: Build
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          make -j4 -C src \
+              bin/undionly.kpxe \
+              bin-x86_64-efi/ipxe.efi \
+              bin-x86_64-efi/snponly.efi \
+              bin-i386-efi/ipxe.efi \
+              bin-i386-efi/snponly.efi
+
+  build-ipxe-arm32:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ipxe/ipxe
+          ref: ${{ env.IPXE_REF }}
+          fetch-depth: 0 # we need the entire history to build iPXE
+
+      - name: Cache binaries
+        uses: actions/cache@v3
+        id: cache
+        with:
+          key: ipxe-arm32-${{ env.IPXE_REF }}
+          path: |
+            src/bin-arm32-efi/snponly.efi
+
+      - name: Add cross-compile deps
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt update
+          sudo apt install -y gcc-arm-none-eabi
+
+      - name: Build
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          make -j4 CROSS=arm-none-eabi- ARCH=arm32 \
+              bin-arm32-efi/snponly.efi
+
+  build-ipxe-arm64:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ipxe/ipxe
+          ref: ${{ env.IPXE_REF }}
+          fetch-depth: 0 # we need the entire history to build iPXE
+
+      - name: Cache binaries
+        uses: actions/cache@v3
+        id: cache
+        with:
+          key: ipxe-arm64-${{ env.IPXE_REF }}
+          path: |
+            src/bin-arm64-efi/snponly.efi
+
+      - name: Add cross-compile deps
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt update
+          sudo apt install -y gcc-aarch64-linux-gnu
+
+      - name: Build
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          make -j4 CROSS=aarch64-linux-gnu- ARCH=arm64 \
+              bin-arm64-efi/snponly.efi
+
+  cache:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Mount x86 cache
+        uses: actions/cache@v3
+        with:
+          key: ipxe-x86-${{ env.IPXE_REF }}
+          path: bin-x86
+        needs:
+          - build-ipxe-x86
+
+      - name: Mount arm32 cache
+        uses: actions/cache@v3
+        with:
+          key: ipxe-arm32-${{ env.IPXE_REF }}
+          path: bin-arm32
+        needs:
+          - build-ipxe-arm32
+
+      - name: Mount arm64 cache
+        uses: actions/cache@v3
+        with:
+          key: ipxe-arm64-${{ env.IPXE_REF }}
+          path: bin-arm64
+        needs:
+          - build-ipxe-arm64
+
+      - name: Combine caches
+        run: |
+          mkdir ipxe
+          cp bin-*/*.{efi,kpxe} ipxe/
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          key: ipxe
+          path: ipxe

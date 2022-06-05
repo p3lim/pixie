@@ -8,11 +8,27 @@ on:
       - '**'
 
 jobs:
+  build-ipxe:
+    uses: ./.github/workflows/ipxe-build.yaml
+
   artifact:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup & build deps
-        uses: p3lim/pixie@master
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setupd-go@v3
+        with:
+          go-version-file: go.mod
+
+      - name: Restore iPXE from cache
+        uses: actions/cache@v3
+        with:
+          key: ipxe
+          path: pkg/tftp/ipxe
+        needs:
+          - build-ipxe
 
       - name: Get version
         uses: ./.github/actions/version
