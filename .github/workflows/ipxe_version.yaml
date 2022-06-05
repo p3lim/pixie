@@ -15,13 +15,13 @@ jobs:
       - name: Checkout iPXE from master
         uses: actions/checkout@v3
         with:
-          path: ipxe
+          path: ${{ env.RUNNER_TEMP }}/ipxe
           repository: ipxe/ipxe
 
       - name: Get version
         uses: ./.github/actions/version
         with:
-          path: ipxe
+          path: ${{ env.RUNNER_TEMP }}/ipxe
         id: version
 
       - name: Update version string
