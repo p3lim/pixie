@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 env:
-  IPXE_REF: 70995397e5bdfd3431e12971aa40630c7014785f
+  IPXE_REF: d72c8fdc902bc5d605fef081a18f6fe84f3d0512
 
 jobs:
   x86:
