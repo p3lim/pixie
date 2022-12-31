@@ -1,3 +1,9 @@
+### Changes in 0.3.1 (2022-12-31)
+
+- Changed: Build system, with multi-arch container images
+- Changed: tftp version to 3.0.0
+- Changed: iPXE version to v1.21.1+7147532
+
 ### Changes in 0.3.0 (2022-06-05)
 
 - Added: Support for 64-bit and 32-bit ARM ROMs
