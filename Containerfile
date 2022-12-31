@@ -1,6 +1,6 @@
 FROM scratch
 
-COPY --chown=65536:65536 --chmod=0777 bin/pixie /
+COPY --chown=65536:65536 --chmod=0777 pixie /
 
 # set default ports for rootless use
 ENV TFTP :6969

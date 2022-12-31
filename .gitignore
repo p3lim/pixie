@@ -1,4 +1,2 @@
-/bin/
-/ipxe/
-/pkg/tftp/*.efi
-/pkg/tftp/*.kpxe
+/pkg/tftp/ipxe/
+/dist/

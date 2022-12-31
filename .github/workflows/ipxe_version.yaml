@@ -19,7 +19,7 @@ jobs:
 
       - name: Update version string
         run: |
-          sed -Ei 's/(IPXE_REF:) [0-9a-f]{40}/\1 ${{ steps.version.outputs.sha }}/' .github/workflows/ipxe_build.yaml
+          sed -Ei 's/(IPXE_REF=)[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' .goreleaser.yaml
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4

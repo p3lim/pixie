@@ -1,0 +1,69 @@
+env:
+  - IPXE_REF=d3c8944d5c3ab262826ed33b16f3fc4dd43bc304
+before:
+  hooks:
+    - rm -rf pkg/tftp/ipxe
+    - git clone https://github.com/ipxe/ipxe pkg/tftp/ipxe
+    - git -C pkg/tftp/ipxe checkout {{ .Env.IPXE_REF }}
+    - make -C pkg/tftp/ipxe/src -j4 bin/undionly.kpxe
+                                    bin-x86_64-efi/ipxe.efi
+                                    bin-x86_64-efi/snponly.efi
+                                    bin-i386-efi/ipxe.efi
+                                    bin-i386-efi/snponly.efi
+    - make -C pkg/tftp/ipxe/src -j4 CROSS=arm-none-eabi- ARCH=arm32 bin-arm32-efi/snponly.efi
+    - make -C pkg/tftp/ipxe/src -j4 CROSS=aarch64-linux-gnu- ARCH=arm64 bin-arm64-efi/snponly.efi
+
+builds:
+  - main: ./cmd/pixie
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+      - arm
+    env:
+      - CGO_ENABLED=0
+
+dockers:
+  - goos: linux
+    goarch: amd64
+    dockerfile: Containerfile
+    use: buildx
+    build_flag_templates:
+      - --platform=linux/amd64
+    image_templates:
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:{{ .Tag }}-amd64
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:latest-amd64
+
+  - goos: linux
+    goarch: arm64
+    dockerfile: Containerfile
+    use: buildx
+    build_flag_templates:
+      - --platform=linux/arm64
+    image_templates:
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:{{ .Tag }}-arm64
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:latest-arm64
+
+  - goos: linux
+    goarch: arm
+    dockerfile: Containerfile
+    use: buildx
+    build_flag_templates:
+      - --platform=linux/arm
+    image_templates:
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:{{ .Tag }}-arm32
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:latest-arm32
+
+docker_manifests:
+  - name_template: ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:{{ .Tag }}
+    image_templates:
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:{{ .Tag }}-amd64
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:{{ .Tag }}-arm64
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:{{ .Tag }}-arm32
+
+  - name_template: ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:latest
+    image_templates:
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:latest-amd64
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:latest-arm64
+      - ghcr.io/{{ .Env.REPOSITORY_OWNER }}/{{ .ProjectName }}:latest-arm32
