@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/p3lim/pixie/pkg/log"
-	"github.com/pin/tftp"
+	"github.com/pin/tftp/v3"
 )
 
 type Server struct {
