@@ -1,3 +1,7 @@
+### Changes in 0.3.2 (2023-03-10)
+
+- Changed: iPXE version to v1.21.1+9e1f7a3
+
 ### Changes in 0.3.1 (2022-12-31)
 
 - Changed: Build system, with multi-arch container images
