@@ -8,7 +8,7 @@ require (
 )
 
 require (
-	github.com/alexflint/go-scalar v1.1.0 // indirect
-	golang.org/x/net v0.0.0-20200202094626-16171245cfb2 // indirect
-	golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a // indirect
+	github.com/alexflint/go-scalar v1.2.0 // indirect
+	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 )
