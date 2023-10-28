@@ -1,3 +1,9 @@
+### Changes in 0.3.3 (2023-10-28)
+
+- Changed: iPXE version to v1.21.1+115707c
+- Changed: Updated to Go v1.21
+- Changed: Updated indirect dependencies
+
 ### Changes in 0.3.2 (2023-03-10)
 
 - Changed: iPXE version to v1.21.1+9e1f7a3
