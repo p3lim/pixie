@@ -126,7 +126,7 @@ jobs:
             src/bin-arm64-efi/snponly.efi
 
       - name: Create artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ipxe-roms
           path: src/bin*/*
