@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0 # we need the entire history to build iPXE
 
       - name: Cache binaries
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache
         with:
           key: ipxe-x86-${{ env.IPXE_REF }}
@@ -47,7 +47,7 @@ jobs:
           fetch-depth: 0 # we need the entire history to build iPXE
 
       - name: Cache binaries
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache
         with:
           key: ipxe-arm32-${{ env.IPXE_REF }}
@@ -77,7 +77,7 @@ jobs:
           fetch-depth: 0 # we need the entire history to build iPXE
 
       - name: Cache binaries
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache
         with:
           key: ipxe-arm64-${{ env.IPXE_REF }}
@@ -104,7 +104,7 @@ jobs:
       - arm64
     steps:
       - name: Mount x86 cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: ipxe-x86-${{ env.IPXE_REF }}
           path:  |
@@ -112,14 +112,14 @@ jobs:
             src/bin*/*.efi
 
       - name: Mount arm32 cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: ipxe-arm32-${{ env.IPXE_REF }}
           path: |
             src/bin-arm32-efi/snponly.efi
 
       - name: Mount arm64 cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: ipxe-arm64-${{ env.IPXE_REF }}
           path: |
