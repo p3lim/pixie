@@ -22,7 +22,7 @@ jobs:
           sed -Ei 's/(IPXE_REF=)[0-9a-f]{40}/\1${{ steps.version.outputs.sha }}/' .goreleaser.yaml
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
           title: ':arrow_up: Bump ipxe/ipxe'
           body: 'https://github.com/ipxe/ipxe/commits/${{ steps.version.outputs.sha }}'
