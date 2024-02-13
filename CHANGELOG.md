@@ -1,3 +1,9 @@
+### Changes in 0.3.4 (2024-02-13)
+
+- Changed: iPXE version to v1.21.1+94b39fb
+- Changed: Updated pin/tftp to v3.1.0
+- Changed: Updated indirect dependencies
+
 ### Changes in 0.3.3 (2023-10-28)
 
 - Changed: iPXE version to v1.21.1+115707c
