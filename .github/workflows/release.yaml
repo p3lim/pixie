@@ -44,7 +44,7 @@ jobs:
           sudo apt install -y gcc-arm-none-eabi gcc-aarch64-linux-gnu
 
       - name: Run goreleaser
-        uses: goreleaser/goreleaser-action@v5
+        uses: goreleaser/goreleaser-action@v6
         with:
           args: release --clean
         env:
