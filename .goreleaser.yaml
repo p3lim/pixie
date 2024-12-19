@@ -1,5 +1,5 @@
 env:
-  - IPXE_REF=24db39fb2983ca83ab5c6ee37cb57a4f7f6f94e6
+  - IPXE_REF=83ba34076ad4ca79be81a71f25303b340c60e7b8
 before:
   hooks:
     - rm -rf pkg/tftp/ipxe
