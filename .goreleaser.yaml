@@ -1,3 +1,5 @@
+version: 2
+
 env:
   - IPXE_REF=969ce2c559a6841a949a1b73a3967b1889e0c999
 before:
