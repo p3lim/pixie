@@ -2,6 +2,7 @@ name: Build iPXE
 
 on:
   workflow_call:
+  workflow_dispatch:
 
 env:
   IPXE_REF: d3c8944d5c3ab262826ed33b16f3fc4dd43bc304
