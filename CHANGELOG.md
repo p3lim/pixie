@@ -1,3 +1,8 @@
+### Changes in 0.3.5 (2025-09-08)
+
+- Changed: iPXE version to v1.21.1+969ce2c
+- Changed: Updated Go to 1.25.1
+
 ### Changes in 0.3.4 (2024-02-13)
 
 - Changed: iPXE version to v1.21.1+94b39fb
