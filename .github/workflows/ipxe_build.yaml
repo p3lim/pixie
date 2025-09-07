@@ -60,6 +60,13 @@ jobs:
           path: /var/cache/apt/archives/*.deb
           key: apt-cache-${{ env.IPXE_REF }}
 
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt update
+          sudo apt install -y -d -o Acquire::Retries=50 \
+            mtools gcc make libc6-dev-i386 liblzma-dev perl gcc-arm-none-eabi gcc-aarch64-linux-gnu
+
       - name: Build
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -100,6 +107,13 @@ jobs:
           path: /var/cache/apt/archives/*.deb
           key: apt-cache-${{ env.IPXE_REF }}
 
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt update
+          sudo apt install -y -d -o Acquire::Retries=50 \
+            mtools gcc make libc6-dev-i386 liblzma-dev perl gcc-arm-none-eabi gcc-aarch64-linux-gnu
+
       - name: Build
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -135,6 +149,13 @@ jobs:
         with:
           path: /var/cache/apt/archives/*.deb
           key: apt-cache-${{ env.IPXE_REF }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt update
+          sudo apt install -y -d -o Acquire::Retries=50 \
+            mtools gcc make libc6-dev-i386 liblzma-dev perl gcc-arm-none-eabi gcc-aarch64-linux-gnu
 
       - name: Build
         if: steps.cache.outputs.cache-hit != 'true'
