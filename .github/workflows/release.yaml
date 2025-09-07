@@ -41,7 +41,7 @@ jobs:
       - name: Install cross-compile dependencies
         run: |
           sudo apt update
-          sudo apt install -y gcc-arm-none-eabi gcc-aarch64-linux-gnu
+          sudo apt install -y gcc-arm-none-eabi gcc-aarch64-linux-gnu liblzma-dev
 
       - name: Run goreleaser
         uses: goreleaser/goreleaser-action@v6
