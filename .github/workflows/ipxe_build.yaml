@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  IPXE_REF: d3c8944d5c3ab262826ed33b16f3fc4dd43bc304
+  IPXE_REF: 969ce2c559a6841a949a1b73a3967b1889e0c999
 
 jobs:
   deps:
