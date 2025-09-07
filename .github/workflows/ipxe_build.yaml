@@ -11,6 +11,10 @@ jobs:
   deps:
     runs-on: ubuntu-latest
     steps:
+      - name: Cache permissions
+        run: |
+          sudo chown $(id -un) /var/cache/apt/archives
+
       - name: Cache packages
         uses: actions/cache@v4
         with:
@@ -44,6 +48,10 @@ jobs:
           path: |
             src/bin/*.kpxe
             src/bin*/*.efi
+
+      - name: Cache permissions
+        run: |
+          sudo chown $(id -un) /var/cache/apt/archives
 
       - name: Get cached dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -81,6 +89,10 @@ jobs:
           path: |
             src/bin-arm32-efi/snponly.efi
 
+      - name: Cache permissions
+        run: |
+          sudo chown $(id -un) /var/cache/apt/archives
+
       - name: Get cached dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/cache/restore@v4
@@ -112,6 +124,10 @@ jobs:
           key: ipxe-arm64-${{ env.IPXE_REF }}
           path: |
             src/bin-arm64-efi/snponly.efi
+
+      - name: Cache permissions
+        run: |
+          sudo chown $(id -un) /var/cache/apt/archives
 
       - name: Get cached dependencies
         if: steps.cache.outputs.cache-hit != 'true'
