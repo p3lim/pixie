@@ -4,7 +4,7 @@ go 1.25
 
 require (
 	github.com/alexflint/go-arg v1.6.1
-	github.com/pin/tftp/v3 v3.1.0
+	github.com/pin/tftp/v3 v3.2.0
 )
 
 require (
