@@ -1,7 +1,7 @@
 version: 2
 
 env:
-  - IPXE_REF=0a1d5fae46dd71ce0f7532e2b63f9538acefecab
+  - IPXE_REF=c51ca76a6e56c5627aea6dc32da4c18d5e6cf394
 before:
   hooks:
     # cleanup
